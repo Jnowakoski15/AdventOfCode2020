@@ -6,6 +6,7 @@ import (
 	"strings"
 )
 
+//Day 3 URL :https://adventofcode.com/2020/day/3
 const input = "mainFile.txt"
 const open = '.'
 const tree = '#'
