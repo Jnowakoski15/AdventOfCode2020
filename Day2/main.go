@@ -11,6 +11,7 @@ import (
 const regEx = `(?P<min>\d+)\-(?P<max>\d+) (?P<letter>\w)\: (?P<pass>\w+)`
 const file = "RealFile.txt"
 
+//Day 2 URL: https://adventofcode.com/2020/day/2
 func main() {
 	count1, count2 := NumPassingPasswords(file)
 	fmt.Println("Number of compliant passwords for part 1: " + strconv.Itoa(count1))
