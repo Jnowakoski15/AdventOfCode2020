@@ -42,7 +42,6 @@ func findTrees(fileName string) int {
 	mountain := build2DArray(lines)
 	treesFound := cheapTobogganTreeEncounterCount(mountain)
 	return treesFound
-
 }
 
 func channelTobogganTreeEncounter(mnt [][]rune, down int, right int, c1 chan int) {
@@ -53,7 +52,7 @@ func variableTobogganTreeEncounter(mnt [][]rune, down int, right int) int {
 	j := right
 	trees := 0
 	rowMaxLen := len(mnt[0])
-	for i := 1; i < len(mnt); i += down {
+	for i := down; i < len(mnt); i += down {
 		row := mnt[i]
 		val := row[j]
 
