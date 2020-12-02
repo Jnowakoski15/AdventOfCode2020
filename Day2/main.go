@@ -22,7 +22,6 @@ func NumPassingPasswords(fileName string) (int, int) {
 	part1Count := 0
 	part2Count := 0
 	lines := fetchFile(fileName)
-
 	for _, line := range lines {
 		if line == "\n" || line == "" {
 			break
