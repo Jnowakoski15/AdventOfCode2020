@@ -68,16 +68,10 @@ func fetchFile(filename string) []string {
 }
 
 func isCompliantPart2(first int, second int, testRune rune, pass string) bool {
-
-	length := len(pass)
 	r1 := rune(pass[first-1])
 	r2 := rune(pass[second-1])
 
 	if r1 == r2 {
-		return false
-	}
-
-	if first > length || second > length {
 		return false
 	}
 
