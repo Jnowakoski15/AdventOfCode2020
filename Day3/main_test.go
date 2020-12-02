@@ -28,3 +28,13 @@ func TestPart2(t *testing.T) {
 		t.Errorf("Expected: %v but result was %v\n", exp, rez)
 	}
 }
+
+func TestRealPart2(t *testing.T) {
+	const input = "mainFile.txt"
+	rez := findPart2Trees(input)
+	exp := uint64(1206576000)
+	if rez != exp {
+		t.Errorf("Expected: %v but result was %v\n", exp, rez)
+	}
+
+}
