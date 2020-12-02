@@ -80,7 +80,6 @@ func build2DArray(lines []string) [][]rune {
 		lineArr := make([]rune, len(line))
 		for i, r := range line {
 			lineArr[i] = r
-			//lineArr = append(lineArr, r)
 		}
 		output[i] = lineArr
 	}
