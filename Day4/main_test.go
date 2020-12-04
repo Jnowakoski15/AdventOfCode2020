@@ -13,6 +13,15 @@ func TestPart1Example(t *testing.T) {
 	}
 }
 
+func TestPart2ValidExample(t *testing.T) {
+	exp := 4
+	rez := part2Evaluation("testValidFile.txt")
+
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
 func TestBirthYearInBounds(t *testing.T) {
 	in := "1991"
 	exp := true
@@ -112,6 +121,33 @@ func TestEyeColorForFalse(t *testing.T) {
 	}
 }
 
+func TestHairColorTestForTrue(t *testing.T) {
+	in := "#888785"
+	exp := true
+	rez := hairColorTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHairColorTestForTooFewChars(t *testing.T) {
+	in := "#FFF"
+	exp := false
+	rez := hairColorTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHairColorTestLackingPrefix(t *testing.T) {
+	in := "888785"
+	exp := false
+	rez := hairColorTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
 func TestPassportIDForTrueResponse(t *testing.T) {
 	in := "123456789"
 	exp := true
@@ -134,6 +170,83 @@ func TestPassportIDForTooFewDigits(t *testing.T) {
 	in := "1234"
 	exp := false
 	rez := passportIDTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightCMInbounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "150cm"
+	exp := true
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightCMUnderBounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "100cm"
+	exp := false
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightCMAboveBounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "200cm"
+	exp := false
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightINInbounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "60in"
+	exp := true
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightinUnderBounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "58in"
+	exp := false
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightINAboveBounds(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "200in"
+	exp := false
+	rez := heightTest(in)
+	if rez != exp {
+		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
+	}
+}
+
+func TestHeightLackingSuffix(t *testing.T) {
+	//If cm, the number must be at least 150 and at most 193.
+	//If in, the number must be at least 59 and at most 76.
+	in := "200"
+	exp := false
+	rez := heightTest(in)
 	if rez != exp {
 		t.Errorf("Rez : %v does not match expected: %v\n", rez, exp)
 	}

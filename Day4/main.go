@@ -51,7 +51,6 @@ var experationYearTest = func(test string) bool {
 //followed by either cm or in:
 //If cm, the number must be at least 150 and at most 193.
 //If in, the number must be at least 59 and at most 76.
-//four digits; at least 2020 and at most 2030.
 var heightTest = func(test string) bool {
 	cleanString := test
 	if strings.Contains(test, "cm") {
@@ -68,14 +67,14 @@ var heightTest = func(test string) bool {
 //a # followed by exactly six characters 0-9 or a-f.
 //Example: hcl:#888785
 var hairColorTest = func(test string) bool {
-	var rex = `0[xX][0-9a-fA-F]+`
+	var rex = `^#([a-fA-F0-9]{6})$`
 	var regex = regexp.MustCompile(rex)
 	return regex.Match([]byte(test))
 }
 
 //(Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
 var eyeColorTest = func(test string) bool {
-	eyeColorMap := map[string]bool{"amb": true, "blu": true, "brn": true, "gry": true, "hzl": true, "oth": true}
+	eyeColorMap := map[string]bool{"amb": true, "blu": true, "brn": true, "gry": true, "grn": true, "hzl": true, "oth": true}
 	_, ok := eyeColorMap[test]
 	return ok
 }
@@ -87,7 +86,7 @@ var passportIDTest = func(test string) bool {
 	return regex.Match([]byte(test))
 }
 
-var strictMandatoryField = map[string]func(string) bool{
+var strictMandatoryFieldMap = map[string]func(string) bool{
 	"byr": birthYearTest,
 	"iyr": issueYearTest,
 	"eyr": experationYearTest,
@@ -95,11 +94,26 @@ var strictMandatoryField = map[string]func(string) bool{
 	"hcl": hairColorTest,
 	"ecl": eyeColorTest,
 	"pid": passportIDTest,
+	"cid": func(in string) bool { return true },
 }
 
 func main() {
 	part1 := part1Evaluation(fileName)
-	fmt.Printf("Part1: %v\n", part1)
+	part2 := part2Evaluation(fileName)
+	fmt.Printf("Part1: %v\nPart2: %v\n", part1, part2)
+}
+
+func part2Evaluation(fileName string) int {
+	lines := readFile(fileName)
+	approvedCount := 0
+	for _, line := range lines {
+		passed := passesAllPassportChecks(line)
+		if passed {
+			approvedCount++
+		}
+	}
+
+	return approvedCount
 }
 
 func part1Evaluation(fileName string) int {
@@ -115,8 +129,32 @@ func part1Evaluation(fileName string) int {
 	return approvedCount
 }
 
+func passesAllPassportChecks(input string) bool {
+	arrOfKeyValue := strings.Fields(input)
+
+	if !containsAllMandatoryFields(input) {
+		fmt.Println("Didn't Pass Mandatory fields: " + input)
+		return false
+	}
+
+	for _, v := range arrOfKeyValue {
+		vArray := strings.Split(v, ":")
+		key := vArray[0]
+		value := vArray[1]
+		testFunc, ok := strictMandatoryFieldMap[key]
+		if !ok {
+			return false
+		}
+		if !testFunc(value) {
+			return false
+		}
+
+	}
+	return true
+}
+
 func containsAllMandatoryFields(input string) bool {
-	for k, _ := range mandatoryField {
+	for k := range mandatoryField {
 		if !strings.Contains(input, k) {
 			return false
 		}
