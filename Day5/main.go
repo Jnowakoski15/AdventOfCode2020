@@ -22,6 +22,18 @@ func main() {
 	fmt.Printf("Part1 Soln: %v\nPart2 Soln: %v\n", part1, part2)
 }
 
+func solvePart1(fileName string) int {
+	output := 0
+	lines := readFile(fileName)
+	for _, line := range lines {
+		ID := getSeatID(line)
+		if ID > output {
+			output = ID
+		}
+	}
+	return output
+}
+
 func solvePart2(fileName string) int {
 	lines := readFile(fileName)
 	seatList := buildSeatingList(lines)
@@ -50,18 +62,6 @@ func buildSeatingList(lines []string) []int {
 		seatList = append(seatList, ID)
 	}
 	return seatList
-}
-
-func solvePart1(fileName string) int {
-	output := 0
-	lines := readFile(fileName)
-	for _, line := range lines {
-		ID := getSeatID(line)
-		if ID > output {
-			output = ID
-		}
-	}
-	return output
 }
 
 func getSeatID(line string) int {
