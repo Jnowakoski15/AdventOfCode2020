@@ -67,38 +67,23 @@ func buildSeatingList(lines []string) []int {
 func getSeatID(line string) int {
 	ID := 0
 	rowLower := 0
-	rowUpper := 127
-	colUpper := 7
+	rowStep := 128
 	colLower := 0
+	colStep := 8
 
 	for _, v := range line {
 		if v == front || v == back {
-			step := ((rowUpper - rowLower) + 1) / 2
-			if v == front {
-				rowUpper -= step
-			}
+			rowStep = rowStep >> 1
 			if v == back {
-				rowLower += step
+				rowLower += rowStep
 			}
 		}
-
 		if v == left || v == right {
-			step := ((colUpper - colLower) + 1) / 2
-			if v == left {
-				colUpper -= step
-			}
+			colStep = colStep >> 1
 			if v == right {
-				colLower += step
+				colLower += colStep
 			}
 		}
-	}
-
-	if rowLower != rowUpper {
-		fmt.Printf("Match fail on row: %v | upper: %v lower %v\n", line, rowUpper, rowLower)
-	}
-
-	if colLower != colUpper {
-		fmt.Printf("Match fail on col: %v| upper: %v lower %v\n", line, colLower, colUpper)
 	}
 
 	ID = rowLower*8 + colLower
